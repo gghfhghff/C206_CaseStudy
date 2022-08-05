@@ -1,11 +1,17 @@
+import java.util.ArrayList;
 
 public class C206_CaseStudy {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
+		ArrayList<Students> studentList = new ArrayList<Students>();
+		
+		studentList.add(new Students("testuser", "test", "boy", "test", 1, 2, "test", "test"));
+		studentList.add(new Students("testuser", "test", "boy", "test", 1, 2, "test", "test"));
+
+		System.out.println(studentList);
+		
 	}
-
 }
 
 /*

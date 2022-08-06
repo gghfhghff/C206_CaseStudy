@@ -1,38 +1,36 @@
-//import java.util.Random;
-
 public class Users {
 
-//    Random randomGenerator = new Random();
-//    int upperBound = 1000;
-//    private int id = randomGenerator.nextInt(upperBound); 
 	
 
 	private int id;
 	public static int nextId = 1;
 	private String role;
 	
-	private String username;
+	private String name;
 	private String password;
 	private String gender;
 	private String address;
+	
+	private String email;
 		
-	public Users(String username, String password, String gender, String address) {
+	public Users(String name, String password, String gender, String address) {
 		id = nextId;
 		nextId++;
 		role  = "CCA Admin";
 	
-		this.username = username;
+		this.name = name;
 		this.password = password;
 		this.gender = gender;
 		this.address = address;
 	}
 	
-	public String getUsername() {
-		return username;
+	
+	public String getName() {
+		return name;
 	}
 	
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public String getPassword() {
@@ -74,6 +72,14 @@ public class Users {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	@Override
+	public String toString() {
+		return "Users [id=" + id + ", role=" + role + ", username=" + name + ", password=" + password + ", gender="
+				+ gender + ", address=" + address + ", email=" + email + "]";
+	}
+	
+	
 	
 }
 

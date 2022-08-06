@@ -1,5 +1,17 @@
 public class CCA {
+	//The system shall allow school CCA coordinators or various CCA instructors in-charge to upload CCAs before the 
+	//registration open such as little league soccer, LEGO expert, dig the ground, bakery, jewellery making etc.
+	//Different CCA may belong to different categories.  
+
+	//Each CCA shall capture information such as title, description, class size (ie. 20), 
+	//which day of the week (i.e., either Tuesday or Wednesday) time (i.e. 3:00PM- 4:00PM), venue, and 
+	//name of the instructor in-charge etc.  
+	
+	
 	private int id;
+	public static int nextId = 1;
+	
+	private String category;
 	private String title;
 	private String description;
 	private int classSize;
@@ -9,8 +21,11 @@ public class CCA {
 	private String venue; 
 	private String instructor;
 	
-	public CCA(int id,String title, String description, int classSize, String dayOfWeek, double timeStart, double timeEnd, String venue, String instructor) {
-		this.id=id;
+	public CCA(String category, String title, String description, int classSize, String dayOfWeek, double timeStart, double timeEnd, String venue, String instructor) {
+		id = nextId;
+		nextId++;
+		
+		this.category = category;
 		this.title = title;
 		this.description = description;
 		this.classSize = classSize;
@@ -24,7 +39,15 @@ public class CCA {
 	public int getId() {
 		return id;
 	}
-	
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -88,4 +111,10 @@ public class CCA {
 	public void setInstructorName(String newInstructor) {
 		instructor = newInstructor;
 	}
+
+	@Override
+	public String toString() {
+		return "CCA [title=" + title + "]";
+	}
+	
 }

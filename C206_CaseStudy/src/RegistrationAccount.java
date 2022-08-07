@@ -29,12 +29,24 @@ public class RegistrationAccount {
 		return studentId;
 	}
 
-	public void addRegisteredCCAs(String addCCA) {
-		registeredCCAs.add(addCCA);
-		status.add("Pending");
+	
+	public ArrayList<String> getRegisteredCCAs() {
+		return registeredCCAs;
+	}
+
+	public void setRegisteredCCAs(ArrayList<String> registeredCCAs) {
+		this.registeredCCAs = registeredCCAs;
+	}
+
+	public ArrayList<String> getStatus() {
+		return status;
+	}
+
+	public void setStatus(ArrayList<String> status) {
+		this.status = status;
 	}
 	
-	public String getRegisteredCCAsAndStatus() {
+	public String viewRegisteredCCAsAndStatus() {
 		String msg = "";
 
 		for (int i = 0; i < registeredCCAs.size(); i++) {
@@ -48,5 +60,7 @@ public class RegistrationAccount {
 		return "RegistrationAccount [registrationId=" + registrationId + ", studentId=" + studentId
 				+ ", registeredCCAs=" + registeredCCAs + ", status=" + status + "]";
 	}
+
+	
 	
 }

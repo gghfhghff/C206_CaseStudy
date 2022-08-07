@@ -102,6 +102,23 @@ public class Students {
 				+ ", parentEmail=" + parentEmail + ", parentContact=" + parentContact + "]";
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+
+	if (obj == this) {
+	    return true;
+	}
+
+	if (!(obj instanceof Students)) {
+	    return false;
+	}
+
+	Students other = (Students) obj;
+
+	return id.equals(other.id) && studentname.equals(other.studentname) && address.equals(other.address)
+			&& grade.equals(other.grade) && class_code.equals(other.class_code) && class_teacher.equals(other.class_teacher)
+			&& parentName.equals(other.parentName) && parentEmail.equals(other.parentEmail) && parentContact == other.parentContact;
+	}
 	
 	
 }

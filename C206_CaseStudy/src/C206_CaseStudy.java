@@ -9,7 +9,7 @@ public class C206_CaseStudy {
 //---------------------------------------- Initialise Arraylist ----------------------------------------//
 		//User Arraylists
 		ArrayList<Users> adminList = new ArrayList<>();
-		ArrayList<RegistrationAccount> studentRegisterAccList = new ArrayList<>();
+		ArrayList<RegistrationAccount> studentAccList = new ArrayList<>();
 
 		//Student Database
 		ArrayList<Students> studentsList = new ArrayList<>();
@@ -22,6 +22,14 @@ public class C206_CaseStudy {
 		//CCA Admin
 		//Parameters: String name, String password
 		adminList.add(new Users("admin", "admin"));
+		
+		//Student Acc
+		//Parameters: int registrationId, String studentId
+		studentAccList.add(new RegistrationAccount(1, "S100"));
+		studentAccList.add(new RegistrationAccount(2, "S100"));
+		studentAccList.add(new RegistrationAccount(3, "S100"));
+		studentAccList.add(new RegistrationAccount(4, "S100"));
+
 		
 		//Students Database
 		//String studentname, String address, String grade, String class_code, String class_teacher,
@@ -40,14 +48,15 @@ public class C206_CaseStudy {
 
 //---------------------------------------- 1. Main Program ----------------------------------------//
 
-//---------------------------------------- 1A. Login ----------------------------------------//
+		
 		boolean loggedin = false;
 		int option = 0;
 		int optionTask = 0;
+		RegistrationAccount accountDetails = null;
 
-			while (loggedin == false) {
+		while (option != 4 && loggedin == false) {
 
-			//Login Menu	
+			//login admin
 			C206_CaseStudy.loginregistermenu();
 			option = Helper.readInt("Choose option > ");
 			
@@ -79,22 +88,47 @@ public class C206_CaseStudy {
 				}		
 			}
 			
-//			if (option == 2) {
-//				if (registerStudent(studentsList, studentRegisterAccList) == true){	
-//					C206_CaseStudy.setHeader("Register successful");
-//					System.out.println(studentRegisterAccList);
-//				}		
-			
-			if (option == 3) {
-				if (registerStudent(studentsList, studentRegisterAccList) == true){	
-					C206_CaseStudy.setHeader("Register successful");
-					System.out.println(studentRegisterAccList);
-				}		
-			}
+			//login student
+			else if (option == 2) {
+				if (loginStudent(studentAccList) == null) {
+					accountDetails = loginStudent(studentAccList);
+					loggedin = true;
 
+					
+					while (optionTask != 4) {
+						C206_CaseStudy.menu("Student");
+						optionTask = Helper.readInt("Choose option > ");
+
+
+					if (optionTask == 1) {
+						
+						C206_CaseStudy.registerCCA(studentAccList, ccaList, accountDetails);
+						System.out.println(studentAccList);
+					//2. delete cca	
+					}
+					}
+				}
+			}
+			
+			
+			//register student
+			else if (option == 3) {
+				registerStudent(studentsList, studentAccList);
+				System.out.println(studentAccList);
+			}
+			
+			//exit
+			else if (option == 4) {
+				System.out.println("Bye!");
+			} 
+			
+			else {
+				System.out.println("Invalid option");
+			}
+			
+		}
 //---------------------------------------- 1B. Task ----------------------------------------//			
 	}
-			}
 			
 	
 //---------------------------------------- 2. Methods ----------------------------------------//
@@ -132,7 +166,7 @@ public class C206_CaseStudy {
 		} else if (role.equals("Student")) {
 			System.out.println("1. Register for CCA");
 			System.out.println("2. Delete registration for CCA");
-			System.out.println("3. View registered for CCA");
+			System.out.println("3. View registered CCA");
 			System.out.println("4. View CCAs");
 			System.out.println("5. Log out");
 			Helper.line(80, "-");
@@ -141,24 +175,27 @@ public class C206_CaseStudy {
 	
 //---------------------------------------- 2A. Admin ----------------------------------------//
 
-	//login
+	//---------------------------------------- Login ----------------------------------------//
 	public static boolean loginAdmin(ArrayList<Users> adminAL) {
 		boolean loggedin = false;
+		String msg = "Login unsuccessful";
+
+		
 		String name = Helper.readString("Enter name > ");
 		String password = Helper.readString("Enter password > ");
 		
 		for (int i = 0; i < adminAL.size(); i++) {
 			if (adminAL.get(i).getName().equals(name) && adminAL.get(i).getPassword().equals(password)) {
 				loggedin = true;
-				C206_CaseStudy.setHeader("Login successful");
-			} else {
-				C206_CaseStudy.setHeader("Login unsuccessful");
-			}
+				msg = "Login successful";
+				break;
+			} 
 		}
+		C206_CaseStudy.setHeader(msg);
 		return loggedin;
 	}
 	
-	//add cca
+	//---------------------------------------- Add ----------------------------------------//
 	public static void addCCA(ArrayList<CCA> ccalist) {
 		String category = Helper.readString("Enter category > ");
 		String title = Helper.readString("Enter cca title > ");
@@ -178,7 +215,7 @@ public class C206_CaseStudy {
 		}
 	}
 	
-	//delete cca
+	//---------------------------------------- Delete ----------------------------------------//
 	public static void deleteCCA(ArrayList<CCA> ccalist) {
 		int ccaid = Helper.readInt("Enter CCA id > ");
 		
@@ -196,19 +233,7 @@ public class C206_CaseStudy {
 		}
 	}
 	
-	//view cca
-//	public static void viewCCA(ArrayList<CCA> ccalist) {
-//		int ccaid = Helper.readInt("Enter CCA id > ");
-//		
-//		for (int i = 0; i < ccalist.size(); i++) {
-//			if (ccalist.get(i).getId() == ccaid) {
-//				ccalist.get(i).toString();
-//				}
-//			}
-//		}
-//	}
-	
-	//view ccas
+	//---------------------------------------- View ----------------------------------------//
 	public static void viewCCAs(ArrayList<CCA> ccalist) {	
 		String output = "";
 		for (int i = 0; i < ccalist.size(); i++) {
@@ -224,79 +249,128 @@ public class C206_CaseStudy {
 	
 //---------------------------------------- 2B. Student ----------------------------------------//
 	
-	//register student
-	public static boolean registerStudent(ArrayList<Students> studentlist, ArrayList<RegistrationAccount> reglist) {
-		boolean registered = false;
+	//---------------------------------------- Register ----------------------------------------//
+	public static boolean registerStudent(ArrayList<Students> studentlist, ArrayList<RegistrationAccount> registerAcclist) {
+		boolean success = false;
+		String msg = "Register unsuccessful";
 		
-		String parentname = Helper.readString("Enter your name > ");
-		String email = Helper.readString("Enter your email > ");
-		int contact = Helper.readInt("Enter your contact number > ");
-		String address = Helper.readString("Enter your address > ");
-		
-		String studentID = Helper.readString("Enter your child's student ID > ");
-		String studentName = Helper.readString("Enter your child's name > ");
-		String grade = Helper.readString("Enter your child's grade > ");
-		String classCode = Helper.readString("Enter your child's class > ");
-		String classTeacher = Helper.readString("Enter classroom teacher > ");
-		
-		ArrayList<Students> validationList = new ArrayList<>();
-		
-		validationList.add(new Students(studentID, studentName, address, grade, classCode, classTeacher, parentname, email, contact));
+//		String parentname = Helper.readString("Enter your name > ");
+//		String email = Helper.readString("Enter your email > ");
+//		int contact = Helper.readInt("Enter your contact number > ");
+//		String address = Helper.readString("Enter your address > ");
+//		
+//		String studentID = Helper.readString("Enter your child's student ID > ");
+//		String studentName = Helper.readString("Enter your child's name > ");
+//		String grade = Helper.readString("Enter your child's grade > ");
+//		String classCode = Helper.readString("Enter your child's class > ");
+//		String classTeacher = Helper.readString("Enter classroom teacher > ");
+//		
+//		ArrayList<Students> validationList = new ArrayList<>();
+//		validationList.add(new Students(studentID, studentName, address, grade, classCode, classTeacher, parentname, email, contact));
 
-		System.out.println(validationList);
-		System.out.println(studentlist);
-
-		for (int i = 0; i < studentlist.size(); i++) {
-//			if (studentlist.get(i).getId() == studentID) {
-				if (studentlist.get(i).equals(validationList.get(0)) == true) {
-			     Random ran = new Random();
-			     int upperBound = 10;
-			     int regID = ran.nextInt(upperBound);
-			     reglist.add(new RegistrationAccount(regID, studentID));
-			     registered = true;
-			     break;
-				}
-			}
-//		}
-		System.out.println(reglist);
-		return registered;	
-}
+//		for (int i = 0; i < studentlist.size(); i++) {
+//				if (studentlist.contains(validationList.get(0))) {
+				    int registrationID = C206_CaseStudy.randomUIDGenerator(registerAcclist);
+				    registerAcclist.add(new RegistrationAccount(registrationID, ""));
+				    msg = "Register successful";
+				    success = true;
+//				    break;
+//				} 
+//			}
+		C206_CaseStudy.setHeader(msg);
+		return success;	
+	}
 	
-	//login
-	public static boolean loginStudent(ArrayList<RegistrationAccount> studentlist) {
-		boolean loggedin = false;
+	public static int randomUIDGenerator(ArrayList<RegistrationAccount> registerAcclist) {
 		
-		String studentid = Helper.readString("Enter student id > ");
-		int regid = Helper.readInt("Enter registration id > ");
+	    Random random = new Random();
+	    int upperBound = 6;
+	    boolean unique = false;
+	    int uniqueID = -1;
 		
-		for (int i = 0; i < studentlist.size(); i++) {
-			if (studentlist.get(i).getStudentId().equals(studentid) && regid == studentlist.get(i).getRegistrationId()) {
-				loggedin = true;
-				C206_CaseStudy.setHeader("Login successful");
-			} else {
-				C206_CaseStudy.setHeader("Login unsuccessful");
+//	    if (unique != true) {
+		    int randomID = random.nextInt(upperBound+1);
+	    	for (int i = 0; i < registerAcclist.size(); i++) {
+	    		if (registerAcclist.get(i).getRegistrationId() != randomID) {
+	    			unique = true;
+	    		} else {
+	    			randomID = -1;
+	    		}
+			}
+//    	} 
+		return randomID;
+	}
+	
+	//---------------------------------------- Login ----------------------------------------//
+	public static RegistrationAccount loginStudent(ArrayList<RegistrationAccount> registerAccList) {
+		RegistrationAccount obj = null;
+		String msg = "Login unsuccessful";
+		
+		String studentId = Helper.readString("Enter student id > ");
+		int registerId = Helper.readInt("Enter registration id > ");
+		
+		for (int i = 0; i < registerAccList.size(); i++) {
+			if (registerAccList.get(i).getStudentId().equals(studentId) && registerId == registerAccList.get(i).getRegistrationId()) {
+				obj = new RegistrationAccount(registerId, studentId);	
+				msg = "Login successful";
+				break;
 			}
 		}
-		return loggedin;
+		C206_CaseStudy.setHeader(msg);
+		return obj;
 	}
   	        
-	    
-//	    for (int i = 0; i < studentlist.size(); i++) {
-//	    	if (studentlist.get(i).getId().equals(studentid)) {
-//	    		if (studentlist.equals(validationList)) {
-//	    			generateRegistrationID(studentlist);
-//		    	}
-//	    	}
-//	    
-//	    }
-//	    
-//		return registered;
-//		
+
+	public static void registerCCA(ArrayList<RegistrationAccount> registerAcclist, ArrayList<CCA> ccaList, RegistrationAccount details) {
+		ArrayList<String> status = new ArrayList<>();
+		ArrayList<String> cca = new ArrayList<>();
+		
+//		C206_CaseStudy.viewCCAs(ccaList);
+//		int id = Helper.readInt("Enter CCA ID to register > ");
 //
-//		}
+//		//traverse cca list
+//		for (int i = 0; i < ccaList.size(); i++) {
+//			//match user input cca id and cca id in list
+//			if (ccaList.get(i).getId() == id) {
+//				String title = ccaList.get(i).getTitle();
+//				//check for vacancy
+////				if (ccaList.get(i).getVacancyOpen() != ccaList.get(i).getVacancyTaken()) {
+
+					for (int a = 0; a < registerAcclist.size(); a++) {
+						if (registerAcclist.get(a).getStudentId() == details.getStudentId()) {
+							
+							System.out.println(registerAcclist.get(a).getStudentId());
+							System.out.println(details.getStudentId());
+
+							cca = registerAcclist.get(a).getRegisteredCCAs();
+							cca.add("okay");
+							
+							System.out.println(cca);
+
+							status = registerAcclist.get(a).getStatus();
+							status.add("Pending");
+							
+							System.out.println(status);
+
+							registerAcclist.get(a).setRegisteredCCAs(cca);
+							registerAcclist.get(a).setStatus(status);
+							
+							System.out.println(registerAcclist);
+
+							
+			
+//							test.add("okay");
+					
+//	addRegisteredCCAs(ccaList.get(i).getTitle());
+//						}
+						}
+						}
+//						}
+//						}
+		
+						}
 	
-	
-	}
+}
 	
 
 	

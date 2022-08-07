@@ -48,6 +48,15 @@ public class CCA {
 		this.instructor = instructor;
 	}
 	
+	@Override
+	public String toString() {
+		//13
+		String output = String.format("%-4s %-11s %-13s %-15s %-10s %-20s %-12s %-10s %-10s %-15s\n", 
+				id, category, title, description, vacancyTaken+"/"+vacancyOpen,
+				dayOfWeek, timeStart, timeEnd, venue, instructor);		
+		return output;
+	}
+	
 	public void addRegisteredStudent(String studentId) {
 		registeredStudents.add(studentId);
 		status.add("Pending");
@@ -136,15 +145,6 @@ public class CCA {
 	
 	public void setInstructorName(String newInstructor) {
 		instructor = newInstructor;
-	}
-
-	@Override
-	public String toString() {
-		//13
-		String output = String.format("%-4s %-11s %-13s %-15s %-10s %-20s %-12s %-10s %-10s %-15s\n", 
-				id, category, title, description, vacancyTaken+"/"+vacancyOpen,
-				dayOfWeek, timeStart, timeEnd, venue, instructor);		
-		return output;
 	}
 	
 }

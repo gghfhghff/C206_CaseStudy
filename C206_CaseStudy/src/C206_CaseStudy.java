@@ -48,8 +48,6 @@ public class C206_CaseStudy {
 
 //---------------------------------------- 1. Main Program ----------------------------------------//
 
-
-
 		boolean loggedin = false;
 		int option = 0;
 		int optionTask = 0;
@@ -79,7 +77,9 @@ public class C206_CaseStudy {
 						//3. update cca
 						//4. view cca
 						} else if (optionTask == 4) {
-							C206_CaseStudy.viewCCAs(ccaList);	
+							
+							System.out.println(C206_CaseStudy.viewCCAs(ccaList));
+
 						//5. log out
 						} else if (optionTask == 5) {
 							loggedin = false; 
@@ -130,7 +130,6 @@ public class C206_CaseStudy {
 			else if (option == 4) {
 				System.out.println("Bye!");
 			} 
-			
 			else {
 				System.out.println("Invalid option");
 			}
@@ -242,7 +241,7 @@ public class C206_CaseStudy {
 		}
 	
 	//---------------------------------------- View ----------------------------------------//
-	public static void viewCCAs(ArrayList<CCA> ccalist) {	
+	public static String viewCCAs(ArrayList<CCA> ccalist) {	
 		String output = "";
 		for (int i = 0; i < ccalist.size(); i++) {
 			output += ccalist.get(i).toString();
@@ -251,7 +250,7 @@ public class C206_CaseStudy {
 		C206_CaseStudy.setHeader("CCA List");
 		String headers = String.format("%-4s %-11s %-13s %-15s %-10s %-20s %-12s %-10s %-10s %-15s\n", 
 				"ID", "Category", "Name", "Description","Vacancy", "Days", "Time Start", "Time End", "Venue", "Teacher-in-charge");
-		System.out.println(headers+output);
+		return headers+output;
 	}
 	
 	
@@ -262,29 +261,29 @@ public class C206_CaseStudy {
 		boolean success = false;
 		String msg = "Register unsuccessful";
 		
-//		String parentname = Helper.readString("Enter your name > ");
-//		String email = Helper.readString("Enter your email > ");
-//		int contact = Helper.readInt("Enter your contact number > ");
-//		String address = Helper.readString("Enter your address > ");
+		String parentname = Helper.readString("Enter your name > ");
+		String email = Helper.readString("Enter your email > ");
+		int contact = Helper.readInt("Enter your contact number > ");
+		String address = Helper.readString("Enter your address > ");
 //		
-//		String studentID = Helper.readString("Enter your child's student ID > ");
-//		String studentName = Helper.readString("Enter your child's name > ");
-//		String grade = Helper.readString("Enter your child's grade > ");
-//		String classCode = Helper.readString("Enter your child's class > ");
-//		String classTeacher = Helper.readString("Enter classroom teacher > ");
+		String studentID = Helper.readString("Enter your child's student ID > ");
+		String studentName = Helper.readString("Enter your child's name > ");
+		String grade = Helper.readString("Enter your child's grade > ");
+		String classCode = Helper.readString("Enter your child's class > ");
+		String classTeacher = Helper.readString("Enter classroom teacher > ");
 //		
-//		ArrayList<Students> validationList = new ArrayList<>();
-//		validationList.add(new Students(studentID, studentName, address, grade, classCode, classTeacher, parentname, email, contact));
+		ArrayList<Students> validationList = new ArrayList<>();
+		validationList.add(new Students(studentID, studentName, address, grade, classCode, classTeacher, parentname, email, contact));
 
-//		for (int i = 0; i < studentlist.size(); i++) {
-//				if (studentlist.contains(validationList.get(0))) {
+		for (int i = 0; i < studentlist.size(); i++) {
+				if (studentlist.contains(validationList.get(0))) {
 				    int registrationID = C206_CaseStudy.randomUIDGenerator(registerAcclist);
 				    registerAcclist.add(new RegistrationAccount(registrationID, ""));
 				    msg = "Register successful";
 				    success = true;
-//				    break;
-//				} 
-//			}
+				    break;
+				} 
+			}
 		C206_CaseStudy.setHeader(msg);
 		return success;	
 	}
@@ -292,21 +291,21 @@ public class C206_CaseStudy {
 	public static int randomUIDGenerator(ArrayList<RegistrationAccount> registerAcclist) {
 		
 	    Random random = new Random();
-	    int upperBound = 6;
+	    int upperBound = 1000;
 	    boolean unique = false;
 	    int uniqueID = -1;
 		
-//	    if (unique != true) {
-		    int randomID = random.nextInt(upperBound+1);
+	    if (unique != true) {
+	    	uniqueID = random.nextInt(upperBound+1);
 	    	for (int i = 0; i < registerAcclist.size(); i++) {
-	    		if (registerAcclist.get(i).getRegistrationId() != randomID) {
+	    		if (registerAcclist.get(i).getRegistrationId() != uniqueID) {
 	    			unique = true;
 	    		} else {
-	    			randomID = -1;
+	    			uniqueID = -1;
 	    		}
 			}
-//    	} 
-		return randomID;
+    	} 
+		return uniqueID;
 	}
 	
 	//---------------------------------------- Login ----------------------------------------//
@@ -392,6 +391,12 @@ public class C206_CaseStudy {
 		}
 		C206_CaseStudy.setHeader(msg);
 	}
+	
+//	public boolean void verifyGrade(ArrayList<Students>, ArrayList<RegistrationAccount> registerAcclist) {
+//		boolean check = false;
+//		
+//		return
+//	}
 	
 }
 	

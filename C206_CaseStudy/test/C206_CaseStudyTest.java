@@ -9,14 +9,26 @@ import org.junit.Test;
 public class C206_CaseStudyTest {
 	
 	private Students st1;
-	private Users us2;
+	private Students st2;
+	private Students st3;
+
+	private Users us1;
+	
+	private CCA cca1;
+	private CCA cca2;
 	private CCA cca3;
-	private RegistrationAccount ra4;
+	private CCA cca4;
+
+	private RegistrationAccount ra1;
 		
-	private ArrayList<Users> adminList;
-	private ArrayList<RegistrationAccount> studentAccList;
-	private ArrayList<Students> studentsList;
-	private ArrayList<CCA> ccaList;
+	ArrayList<Users> adminList = new ArrayList<>();
+	ArrayList<RegistrationAccount> studentAccList = new ArrayList<>();
+
+	//Student Database
+	ArrayList<Students> studentsList = new ArrayList<>();
+	
+	//CCA Arraylists
+	ArrayList<CCA> ccaList = new ArrayList<>();
 	
 	public C206_CaseStudyTest() {
 		super();
@@ -25,55 +37,29 @@ public class C206_CaseStudyTest {
 	@Before
 	public void setUp() throws Exception {
 		// prepare test data
-		st1 = new Students("S1", "Wunhon", "King Albert Park 765432", "P4", "P4-100", "Amran Mohamed", "Michelle", "21040247@myrp.edu.sg", 12345678);
-		us2 = new Users("admin", "admin");
-		cca3 = new CCA("Sports", "Football", "Kick ball", 10, 1, "Friday", 15.00, 18.00, "Field", "Mr Amran");
-		ra4 = new RegistrationAccount(1, "S100");
 		
-		//User Arraylists
-		ArrayList<Users> adminList = new ArrayList<>();
-		ArrayList<RegistrationAccount> studentAccList = new ArrayList<>();
+		studentAccList.add(new RegistrationAccount(1, "S100"));
+		studentAccList.add(new RegistrationAccount(2, "S200"));
+		studentAccList.add(new RegistrationAccount(3, "S300"));
+		studentAccList.add(new RegistrationAccount(4, "S400"));
+		
+		//Students Database
+		//String studentname, String address, String grade, String class_code, String class_teacher,
+		//String parentName, String parentEmail, int parentContact
+		studentsList.add(new Students("S1", "Wunhon", "King Albert Park 765432", "P4", "P4-100", "Amran Mohamed", "Michelle", "21040247@myrp.edu.sg", 12345678));
+		studentsList.add(new Students("S2", "Marcus", "Orchard Road 765432", "P3", "P3-100", "Amran Mohamed", "Lucious", "21040247@myrp.edu.sg", 12345678));
 
-		//Student Database
-		ArrayList<Students> studentsList = new ArrayList<>();
+		//CCAs
+		//String category, String title, String description, int vacancyOpen, int vacancyTaken, 
+		//String dayOfWeek, double timeStart, double timeEnd, String venue, String instructor)
+		ccaList.add(new CCA("Sports", "Football", "Kick ball", 10, 1, "Friday", 15.00, 18.00, "Field", "Mr Amran"));
+//		ccaList.add(new CCA("Sports", "Basketball", "Bounce ball", 10, 2, "Friday", 15.00, 18.00, "Field", "Mr Amran"));
+//		ccaList.add(new CCA("Sports", "Volleyball", "Smack ball", 10, 0, "Friday", 15.00, 18.00, "Field", "Mr Amran"));
+//		ccaList.add(new CCA("Culinary", "Baking", "Make cake", 20, 5, "Thursday", 15.00, 18.00, "Kitchen", "Mr Amran"));
+//		ccaList.add(new CCA("Business", "Investment", "Buy Stocks", 20, 8, "Thursday, Friday", 15.00, 18.00, "W65D", "Mr Amran"));
 		
-		//CCA Arraylists
-		ArrayList<CCA> ccaList = new ArrayList<>();
+		cca1 = new CCA("Sports", "Football", "Kick ball", 10, 1, "Friday", 15.00, 18.00, "Field", "Mr Amran");
 	}
-	
-	@Test
-	public void testAddUsers() {
-		// Item list is not null, so that can add a new item - boundary
-				assertNotNull("Check if there is valid User arraylist to add to", adminList);
-				//Given an empty list, after adding 1 item, the size of the list is 1 - normal
-				//The item just added is as same as the first item of the list
-				C206_CaseStudy.addUsers(adminList, us2);
-				assertEquals("Check that User arraylist size is 1", 1, adminList.size());
-				assertSame("Check that User is added", us2, adminList.get(0));
-				
-				//Add another item. test The size of the list is 2? -normal
-				//The item just added is as same as the second item of the list
-				C206_CaseStudy.addUsers(adminList, us2);
-				assertEquals("Check that User arraylist size is 2", 2, adminList.size());
-				assertSame("Check that User is added", us2, adminList.get(1));
-			}
-	
-	@Test
-	public void testAddStudents() {
-		// Item list is not null, so that can add a new item - boundary
-				assertNotNull("Check if there is valid User arraylist to add to", studentsList);
-				//Given an empty list, after adding 1 item, the size of the list is 1 - normal
-				//The item just added is as same as the first item of the list
-				C206_CaseStudy.addStudents(studentsList, st1);
-				assertEquals("Check that User arraylist size is 1", 1, studentsList.size());
-				assertSame("Check that User is added", st1, studentsList.get(0));
-				
-				//Add another item. test The size of the list is 2? -normal
-				//The item just added is as same as the second item of the list
-				C206_CaseStudy.addStudents(studentsList, st1);
-				assertEquals("Check that Student arraylist size is 2", 2, studentsList.size());
-				assertSame("Check that Student is added", st1, studentsList.get(1));
-			}
 	
 	@Test
 	public void testAddCCA() {
@@ -81,40 +67,60 @@ public class C206_CaseStudyTest {
 				assertNotNull("Check if there is valid User arraylist to add to", ccaList);
 				//Given an empty list, after adding 1 item, the size of the list is 1 - normal
 				//The item just added is as same as the first item of the list
-				C206_CaseStudy.addCCA(ccaList, cca3);
-				assertEquals("Check that CCA arraylist size is 1", 1, ccaList.size());
-				assertSame("Check that CCA is added", cca3, ccaList.get(0));
+				C206_CaseStudy.addCCA(ccaList);
+				assertEquals("Check that User arraylist size is 1", 1, ccaList.size());
+				assertSame("Check that User is added", cca1, adminList.get(0));
 				
 				//Add another item. test The size of the list is 2? -normal
 				//The item just added is as same as the second item of the list
-				C206_CaseStudy.addCCA(ccaList, cca3);
-				assertEquals("Check that CCA arraylist size is 2", 2, ccaList.size());
-				assertSame("Check that CCA is added", cca3, ccaList.get(1));
+				C206_CaseStudy.addCCA(ccaList);
+				assertEquals("Check that User arraylist size is 2", 2, ccaList.size());
+				assertSame("Check that User is added", cca1, adminList.get(1));
+	}
+	
+	@Test
+	public void testDeleteCCA() {
+		// Item list is not null, so that can add a new item - boundary
+				assertNotNull("Check if there is valid User arraylist to add to", ccaList);
+				//Given an empty list, after adding 1 item, the size of the list is 1 - normal
+				//The item just added is as same as the first item of the list
+				C206_CaseStudy.deleteCCA(ccaList);
+				assertEquals("Check that User arraylist size is 1", 1, ccaList.size());
+				assertSame("Check that CCA is deleted", cca1, studentsList.get(0));
+				
+				//Add another item. test The size of the list is 2? -normal
+				//The item just added is as same as the second item of the list
+				C206_CaseStudy.deleteCCA(ccaList);
+				assertEquals("Check that Student arraylist size is 2", 2, ccaList.size());
+				assertSame("Check that CCA is deleted", cca2, ccaList.get(1));
 			}
 	
 	@Test
-	public void testAddRegisterationAccount() {
-		// Item list is not null, so that can add a new item - boundary
-				assertNotNull("Check if there is valid User arraylist to add to", studentAccList);
-				//Given an empty list, after adding 1 item, the size of the list is 1 - normal
-				//The item just added is as same as the first item of the list
-				C206_CaseStudy.addRegisterationAccount(studentAccList, ra4);
-				assertEquals("Check that Registeration Account arraylist size is 1", 1, studentAccList.size());
-				assertSame("Check that Registeration Account is added", ra4, studentAccList.get(0));
+	public void testViewCCAs() {
+		// Test if Item list is not null but empty, so that can add a new item
+		assertNotNull("Test if there is valid Chromebook arraylist to add to", ccaList);
+		
+		//test if the list of chromebook retrieved from the SourceCentre is empty
+		String allCCAs= C206_CaseStudy.viewCCAs(ccaList);
+		String testOutput = "";
+		assertEquals("Check that viewCCAs", testOutput, allCCAs);
 				
-				//Add another item. test The size of the list is 2? -normal
-				//The item just added is as same as the second item of the list
-				C206_CaseStudy.addRegisterationAccount(studentAccList, ra4);
-				assertEquals("Check that Registeration Account arraylist size is 2", 2, studentAccList.size());
-				assertSame("Check that Registeration Account is added", ra4, studentAccList.get(1));
-			}
+		//Given an empty list, after adding 2 items, test if the size of the list is 2
+		C206_CaseStudy.addCCA(ccaList);
+		C206_CaseStudy.addCCA(ccaList);
+		assertEquals("Test if that Chromebook arraylist size is 2?", 2, ccaList.size());
+		
+		//test if the expected output string same as the list of chromebook retrieved from the SourceCentre
+		allCCAs= C206_CaseStudy.viewCCAs(ccaList);
+
+		 testOutput = String.format("%-4s %-11s %-13s %-15s %-10s %-20s %-12s %-10s %-10s %-15s\n", 
+				"ID", "Category", "Name", "Description","Vacancy", "Days", "Time Start", "Time End", "Venue", "Teacher-in-charge");		
+		assertEquals("Check that ViewAllCamcorderlist", testOutput, allCCAs);	
+		}
+
 			
 	@After
 	public void tearDown() throws Exception {
-		st1 = null;
-		us2 = null;
-		cca3 = null;
-		ra4 = null;
 		
 		adminList = null;
 		studentAccList = null;

@@ -57,8 +57,7 @@ public class RegistrationAccount {
 
 	@Override
 	public String toString() {
-		return "RegistrationAccount [registrationId=" + registrationId + ", studentId=" + studentId
-				+ ", registeredCCAs=" + registeredCCAs + ", status=" + status + "]";
+		return "" + registrationId;
 	}
 
 	

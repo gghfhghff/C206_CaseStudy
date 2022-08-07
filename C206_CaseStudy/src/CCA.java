@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class CCA {
 	//The system shall allow school CCA coordinators or various CCA instructors in-charge to upload CCAs before the 
 	//registration open such as little league soccer, LEGO expert, dig the ground, bakery, jewellery making etc.
@@ -14,26 +16,41 @@ public class CCA {
 	private String category;
 	private String title;
 	private String description;
-	private int classSize;
+	private int vacancyOpen;
+	private int vacancyTaken;
 	private String dayOfWeek;
 	private Double timeStart;
 	private Double timeEnd;
 	private String venue; 
 	private String instructor;
 	
-	public CCA(String category, String title, String description, int classSize, String dayOfWeek, double timeStart, double timeEnd, String venue, String instructor) {
+	private ArrayList<String> registeredStudents;
+	private ArrayList<String> status;
+	
+	public CCA(String category, String title, String description, int vacancyOpen, int vacancyTaken, 
+			String dayOfWeek, double timeStart, double timeEnd, String venue, String instructor) {
+		
 		id = nextId;
 		nextId++;
+	
+		registeredStudents = new ArrayList<String>();
+		status = new ArrayList<String>();
 		
 		this.category = category;
 		this.title = title;
 		this.description = description;
-		this.classSize = classSize;
+		this.vacancyOpen = vacancyOpen;
+		this.vacancyTaken = vacancyTaken;
 		this.dayOfWeek = dayOfWeek;
 		this.timeStart = timeStart;
 		this.timeEnd = timeEnd;
 		this.venue = venue;
 		this.instructor = instructor;
+	}
+	
+	public void addRegisteredStudent(String studentId) {
+		registeredStudents.add(studentId);
+		status.add("Pending");
 	}
 	
 	public int getId() {
@@ -64,14 +81,23 @@ public class CCA {
 		description = newDescription;
 	}
 	
-	public int getClassSize() {
-		return classSize;
-	}
 	
-	public void setClassSize(int newClassSize) {
-		classSize = newClassSize;
+	public int getVacancyOpen() {
+		return vacancyOpen;
 	}
-	
+
+	public void setVacancyOpen(int vacancyOpen) {
+		this.vacancyOpen = vacancyOpen;
+	}
+
+	public int getVacancyTaken() {
+		return vacancyTaken;
+	}
+
+	public void setVacancyTaken(int vacancyTaken) {
+		this.vacancyTaken = vacancyTaken;
+	}
+
 	public String getDayOfWeek() {
 		return dayOfWeek;
 	}
@@ -114,7 +140,11 @@ public class CCA {
 
 	@Override
 	public String toString() {
-		return "CCA [title=" + title + "]";
+		//13
+		String output = String.format("%-4s %-11s %-13s %-15s %-10s %-20s %-12s %-10s %-10s %-15s\n", 
+				id, category, title, description, vacancyTaken+"/"+vacancyOpen,
+				dayOfWeek, timeStart, timeEnd, venue, instructor);		
+		return output;
 	}
 	
 }

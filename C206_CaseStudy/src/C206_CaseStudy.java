@@ -26,9 +26,9 @@ public class C206_CaseStudy {
 		//Student Acc
 		//Parameters: int registrationId, String studentId
 		studentAccList.add(new RegistrationAccount(1, "S100"));
-		studentAccList.add(new RegistrationAccount(2, "S100"));
-		studentAccList.add(new RegistrationAccount(3, "S100"));
-		studentAccList.add(new RegistrationAccount(4, "S100"));
+		studentAccList.add(new RegistrationAccount(2, "S200"));
+		studentAccList.add(new RegistrationAccount(3, "S300"));
+		studentAccList.add(new RegistrationAccount(4, "S400"));
 
 		
 		//Students Database
@@ -48,7 +48,8 @@ public class C206_CaseStudy {
 
 //---------------------------------------- 1. Main Program ----------------------------------------//
 
-		
+
+
 		boolean loggedin = false;
 		int option = 0;
 		int optionTask = 0;
@@ -105,6 +106,14 @@ public class C206_CaseStudy {
 						C206_CaseStudy.registerCCA(studentAccList, ccaList, accountDetails);
 						System.out.println(studentAccList);
 					//2. delete cca	
+					} 	
+					else if (optionTask == 2) {
+						
+						C206_CaseStudy.dropRegistration(studentAccList);
+					}
+										
+					else if (optionTask == 3) {
+						C206_CaseStudy.viewRegistrationStatus(studentAccList);
 					}
 					}
 				}
@@ -167,8 +176,7 @@ public class C206_CaseStudy {
 			System.out.println("1. Register for CCA");
 			System.out.println("2. Delete registration for CCA");
 			System.out.println("3. View registered CCA");
-			System.out.println("4. View CCAs");
-			System.out.println("5. Log out");
+			System.out.println("4. Log out");
 			Helper.line(80, "-");
 		} 	
 	}
@@ -320,55 +328,70 @@ public class C206_CaseStudy {
 		return obj;
 	}
   	        
-
+	//---------------------------------------- Register ----------------------------------------//
 	public static void registerCCA(ArrayList<RegistrationAccount> registerAcclist, ArrayList<CCA> ccaList, RegistrationAccount details) {
 		ArrayList<String> status = new ArrayList<>();
 		ArrayList<String> cca = new ArrayList<>();
+		String title ="";
+		String msg = "Register unsuccessful";
 		
-//		C206_CaseStudy.viewCCAs(ccaList);
-//		int id = Helper.readInt("Enter CCA ID to register > ");
-//
-//		//traverse cca list
-//		for (int i = 0; i < ccaList.size(); i++) {
-//			//match user input cca id and cca id in list
-//			if (ccaList.get(i).getId() == id) {
-//				String title = ccaList.get(i).getTitle();
-//				//check for vacancy
-////				if (ccaList.get(i).getVacancyOpen() != ccaList.get(i).getVacancyTaken()) {
+		C206_CaseStudy.viewCCAs(ccaList);
+		int id = Helper.readInt("Enter CCA ID to register > ");
+
+		//traverse cca list
+		for (int i = 0; i < ccaList.size(); i++) {
+			//get title for selected cca
+			if (ccaList.get(i).getId() == id) {
+				title = ccaList.get(i).getTitle();
+				//check for vacancy
+				if (ccaList.get(i).getVacancyOpen() != ccaList.get(i).getVacancyTaken()) {
 
 					for (int a = 0; a < registerAcclist.size(); a++) {
-						if (registerAcclist.get(a).getStudentId() == details.getStudentId()) {
+						if (registerAcclist.get(a).getStudentId().equals(details.getStudentId())) {
 							
-							System.out.println(registerAcclist.get(a).getStudentId());
-							System.out.println(details.getStudentId());
-
 							cca = registerAcclist.get(a).getRegisteredCCAs();
-							cca.add("okay");
-							
-							System.out.println(cca);
-
+							cca.add(title);
 							status = registerAcclist.get(a).getStatus();
-							status.add("Pending");
-							
-							System.out.println(status);
-
+							status.add("pending");
 							registerAcclist.get(a).setRegisteredCCAs(cca);
 							registerAcclist.get(a).setStatus(status);
-							
-							System.out.println(registerAcclist);
-
-							
-			
-//							test.add("okay");
-					
-//	addRegisteredCCAs(ccaList.get(i).getTitle());
-//						}
-						}
-						}
-//						}
-//						}
+							msg = "Register successful";
+						} 
+					}
+				} else {
+						msg = "No more vacancy";
+						}	 
+			} 
+			}
+			C206_CaseStudy.setHeader(msg);
+		}
+	
+	//---------------------------------------- View registration status ----------------------------------------//
+	public static void viewRegistrationStatus(ArrayList<RegistrationAccount> registerAcclist) {
+		String msg = "";
 		
-						}
+		for (int i = 0; i < registerAcclist.size(); i++) {
+			msg+= registerAcclist.get(i).viewRegisteredCCAsAndStatus();
+		}
+		System.out.println(msg);
+	}
+	
+	public static void dropRegistration(ArrayList<RegistrationAccount> registerAcclist) {
+		String msg = "Drop unsuccessful";
+		ArrayList<String> cca = new ArrayList<>();
+		ArrayList<String> status = new ArrayList<>();
+		
+		String ccaName = Helper.readString("Enter CCA Name to drop > ");
+		
+		for (int i = 0; i < registerAcclist.size(); i++) {
+			if (registerAcclist.get(i).getRegisteredCCAs().equals(ccaName)) {
+				registerAcclist.get(i).getRegisteredCCAs().remove(ccaName);
+				registerAcclist.get(i).getStatus().remove(i);
+				msg = "Drop successful";
+			}
+		}
+		C206_CaseStudy.setHeader(msg);
+	}
 	
 }
 	

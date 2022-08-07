@@ -204,42 +204,42 @@ public class C206_CaseStudy {
 	}
 	
 	//---------------------------------------- Add ----------------------------------------//
-	public static void addCCA(ArrayList<CCA> ccalist) {
-		String category = Helper.readString("Enter category > ");
-		String title = Helper.readString("Enter cca title > ");
-		String description = Helper.readString("Enter description > ");
-		int vacancy = Helper.readInt("Enter no. of vacancy for cca > ");
-		int vacancyTaken = Helper.readInt("Enter no. of taken vacancy for cca > ");
-		String dayOfWeek = Helper.readString("Enter cca day(s) of week > ");
-		double timeStart = Helper.readDouble("Enter cca start time > ");
-		double timeEnd = Helper.readDouble("Enter cca end time > ");
-		String venue = Helper.readString("Enter venue > ");
-		String instructor = Helper.readString("Enter instructor in charge > ");
-		
-		if (ccalist.add(new CCA(category, title, description, vacancy, vacancyTaken, dayOfWeek, timeStart, timeEnd, venue, instructor))) {
-			C206_CaseStudy.setHeader("Add CCA successful");
-		} else {
-			C206_CaseStudy.setHeader("Add CCA unsuccessful");
+		public static void addCCA(ArrayList<CCA> ccalist) {
+			String category = Helper.readString("Enter category > ");
+			String title = Helper.readString("Enter cca title > ");
+			String description = Helper.readString("Enter description > ");
+			int vacancy = Helper.readInt("Enter no. of vacancy for cca > ");
+			int vacancyTaken = Helper.readInt("Enter no. of taken vacancy for cca > ");
+			String dayOfWeek = Helper.readString("Enter cca day(s) of week > ");
+			double timeStart = Helper.readDouble("Enter cca start time > ");
+			double timeEnd = Helper.readDouble("Enter cca end time > ");
+			String venue = Helper.readString("Enter venue > ");
+			String instructor = Helper.readString("Enter instructor in charge > ");
+			
+			if (ccalist.add(new CCA(category, title, description, vacancy, vacancyTaken, dayOfWeek, timeStart, timeEnd, venue, instructor))) {
+				C206_CaseStudy.setHeader("Add CCA successful");
+			} else {
+				C206_CaseStudy.setHeader("Add CCA unsuccessful");
+			}
 		}
-	}
-	
-	//---------------------------------------- Delete ----------------------------------------//
-	public static void deleteCCA(ArrayList<CCA> ccalist) {
-		int ccaid = Helper.readInt("Enter CCA id > ");
 		
-		for (int i = 0; i < ccalist.size(); i++) {
+		//---------------------------------------- Delete ----------------------------------------//
+		public static void deleteCCA(ArrayList<CCA> ccalist) {
+			int ccaid = Helper.readInt("Enter CCA id > ");
 			
-			CCA current = ccalist.get(i);
-			
-			if (ccalist.get(i).getId() == ccaid) {
-				if (ccalist.remove(i) == current) {
-					C206_CaseStudy.setHeader("Delete CCA Successful");
-				} else {
-					C206_CaseStudy.setHeader("Delete CCA unsuccessful");
+			for (int i = 0; i < ccalist.size(); i++) {
+				
+				CCA current = ccalist.get(i);
+				
+				if (ccalist.get(i).getId() == ccaid) {
+					if (ccalist.remove(i) == current) {
+						C206_CaseStudy.setHeader("Delete CCA Successful");
+					} else {
+						C206_CaseStudy.setHeader("Delete CCA unsuccessful");
+					}
 				}
 			}
 		}
-	}
 	
 	//---------------------------------------- View ----------------------------------------//
 	public static void viewCCAs(ArrayList<CCA> ccalist) {	

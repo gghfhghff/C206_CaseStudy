@@ -151,6 +151,9 @@ public class C206_CaseStudyTest {
 	
 //---------------------------------------- 2. Test Registration Accounts ----------------------------------------//		
 	//5
+	
+	//test registr, test donnid register twice
+	
 	@Test
 	public void testLoginRegistrationAcc() {
 		//test list not empty
@@ -166,7 +169,7 @@ public class C206_CaseStudyTest {
 		assertNull("Return true if cannot login with wrong credentials", wronglogin);
 
 		//test return correct student id and reg id obj if logged in
-		assertEquals("Return correct student id & reg id if login with correct credentials", login, correct);
+		assertEquals("Return correct student id & reg id if login with correct credentials", login, correct);	
 	}
 	
 	//6

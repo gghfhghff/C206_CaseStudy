@@ -35,10 +35,10 @@ public class C206_CaseStudy {
 		//String studentname, String address, String grade, String class_code, String class_teacher,
 		//String parentName, String parentEmail, int parentContact
 		studentsList.add(new Students("S1", "Wunhon", "King Albert Park 765432", "P4", "P4-100", "Amran Mohamed", "Michelle", "21040247@myrp.edu.sg", 12345678));
-		studentsList.add(new Students("S2", "Marcus", "Orchard Road 765432", "P3", "P3-100", "Amran Mohamed", "Lucious", "21040247@myrp.edu.sg", 12345678));
+		studentsList.add(new Students("S2", "Marcus", "Orchard Road 765432", "P3", "P3-100", "Amran Mohamed", "Michelle", "21040247@myrp.edu.sg", 12345678));
 
 		//CCAs
-		//String category, String title, String description, int vacancyOpen, int vacancyTaken, 
+		//String category, String title, String description, int vacancyOpen, int vacancTaken, 
 		//String dayOfWeek, double timeStart, double timeEnd, String venue, String instructor)
 		ccaList.add(new CCA("Sports", "Football", "Kick ball", 10, 1, "Friday", 15.00, 18.00, "Field", "Amran Mohamed"));
 		ccaList.add(new CCA("Sports", "Basketball", "Bounce ball", 10, 2, "Friday", 15.00, 18.00, "Field", "Amran Mohamed"));
@@ -92,11 +92,11 @@ public class C206_CaseStudy {
 			
 			//login student
 			else if (option == 2) {
-				if (loginRegistrationAcc(studentAccList) != null) {
-					accountDetails = loginRegistrationAcc(studentAccList);
+				accountDetails = loginRegistrationAcc(studentAccList);
+				if (accountDetails != null) {
 					loggedin = true;
 					
-					while (optionTask != 4) {
+					while (optionTask != 5) {
 							C206_CaseStudy.menu("Student");
 							optionTask = Helper.readInt("Choose option > ");
 						//1. register cca	
@@ -110,11 +110,12 @@ public class C206_CaseStudy {
 						//3. view cca registration status			
 						else if (optionTask == 3) {
 							C206_CaseStudy.viewRegistrationStatus(studentAccList);
+						} 	else if (optionTask == 4) {
+							C206_CaseStudy.viewCCAs(ccaList);
 						}
 					}
 				}
 			}
-			
 			
 			//register student
 			else if (option == 3) {
@@ -169,8 +170,9 @@ public class C206_CaseStudy {
 		} else if (role.equals("Student")) {
 			System.out.println("1. Register for CCA");
 			System.out.println("2. Delete registration for CCA");
-			System.out.println("3. View registered CCA");
-			System.out.println("4. Log out");
+			System.out.println("3. View CCA registration status");
+			System.out.println("4. View CCAs");
+			System.out.println("5. Log out");
 			Helper.line(80, "-");
 		} 	
 	}

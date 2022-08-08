@@ -18,11 +18,12 @@ public class C206_CaseStudyTest {
 	private CCA cca2;
 	private CCA cca3;
 	private CCA cca4;
-
-	private RegistrationAccount ra1;
-		
+	
+	private RegistrationAccount regiAcc1;
+	private RegistrationAccount regiAcc2;
+	
 	ArrayList<Users> adminList = new ArrayList<>();
-	ArrayList<RegistrationAccount> studentAccList = new ArrayList<>();
+	ArrayList<RegistrationAccount> registrationAccList;
 
 	//Student Database
 	ArrayList<Students> studentsList = new ArrayList<>();
@@ -39,11 +40,10 @@ public class C206_CaseStudyTest {
 		// prepare test data
 		
 		ccaList = new ArrayList<>();
+		registrationAccList = new ArrayList<>();
 		
-		studentAccList.add(new RegistrationAccount(1, "S100"));
-		studentAccList.add(new RegistrationAccount(2, "S200"));
-		studentAccList.add(new RegistrationAccount(3, "S300"));
-		studentAccList.add(new RegistrationAccount(4, "S400"));
+		regiAcc1 = new RegistrationAccount(1001, "S1");
+		regiAcc2 = new RegistrationAccount(1002, "S2");
 		
 		//Students Database
 		//String studentname, String address, String grade, String class_code, String class_teacher,
@@ -63,9 +63,11 @@ public class C206_CaseStudyTest {
 		cca1 = new CCA("Sports", "Football", "Kick ball", 10, 1, "Friday", 15.00, 18.00, "Field", "Amran Mohamed");
 		cca2 = new CCA("Sports", "Basketball", "Bounce ball", 10, 2, "Friday", 15.00, 18.00, "Court", "Amran Mohamed");
 		cca3 = new CCA("Sports", "Volleyball", "", 10, 0, "Friday", 15.00, 18.00, "Court", "Mr Amran");
+		cca4 = new CCA("Sports", "Baseball", "", 10, 10, "Wednesday", 15.00, 18.00, "Field", "Timothy Goh");
 	}
 	
-	//#1
+//---------------------------------------- Test CCAs ----------------------------------------//	
+	//1
 	@Test
 	public void testAddCCA() {
 		//List is not null, so that can add a new item - boundary
@@ -83,25 +85,29 @@ public class C206_CaseStudyTest {
 		assertSame("Check that Basketball CCA is added", cca2, ccaList.get(1));
 	}
 	
+	//2
 	@Test
-	public void testdoDeleteCCA() {
+	public void testDoDeleteCCA() {
 		// Item list is not null, so that can add a new item - boundary
 		assertNotNull("Check if there is valid CCA arraylist to delete from", ccaList);
 		ccaList.add(cca1);
 		ccaList.add(cca2);
-		System.out.println(ccaList);
 		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
 		//The item just added is as same as the first item of the list
-		C206_CaseStudy.doDeleteCCA(ccaList, 4);
+		C206_CaseStudy.doDeleteCCA(ccaList, 25);
 		assertEquals("Check that User arraylist size is 1", 1, ccaList.size());
 		assertNotSame("Check that Football CCA is deleted", cca1, ccaList.get(0));
 		//Add another item. test The size of the list is 2?
 		//The item just added is as same as the second item of the list
-		C206_CaseStudy.doDeleteCCA(ccaList, 5);
+		C206_CaseStudy.doDeleteCCA(ccaList, 26);
 		assertEquals("Check that Student arraylist size is 0", 0, ccaList.size());
 //		assertNotSame("Check that Basketball CCA is deleted", cca2, ccaList.get(0));
+		
+		//test caannot delete when no cca
+		//test cannot delete when wrong id
 	}
 	
+	//3
 	@Test
 	public void testUpdateCCADesc() {
 		// Item list is not null, so that can add a new item - boundary
@@ -110,14 +116,15 @@ public class C206_CaseStudyTest {
 		ccaList.add(cca3);
 		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
 		//The item just added is as same as the first item of the list
-		C206_CaseStudy.doUpdateCCADesc(ccaList, 10, "test");
+		C206_CaseStudy.doUpdateCCADesc(ccaList, 13, "test");
 		assertSame("Check that Football CCA desc is changed to test", "test", ccaList.get(0).getDescription());
 		//Add another item. test The size of the list is 2?
 		//The item just added is as same as the second item of the list
-		C206_CaseStudy.doUpdateCCADesc(ccaList, 12, "Smack Ball");
+		C206_CaseStudy.doUpdateCCADesc(ccaList, 15, "Smack Ball");
 		assertSame("Check that Volleyball CCA desc is changed to Smack Ball", "Smack Ball", ccaList.get(1).getDescription());
 	}
 	
+	//4
 	@Test
 	public void testGetCCAs() {
 		// Test if Item list is not null but empty, so that can add a new item
@@ -136,17 +143,84 @@ public class C206_CaseStudyTest {
 		//test if expected output is the same
 		allCCAs = C206_CaseStudy.getCCAs(ccaList);
 
-		testOutput = String.format("%-4s %-11s %-13s %-15s %-10s %-20s %-12s %-10s %-10s %-15s\n", 1, "Sports", "Football", "Kick ball", 1+"/"+10, "Friday", 15.00, 18.00, "Field", "Amran Mohamed");
-		testOutput += String.format("%-4s %-11s %-13s %-15s %-10s %-20s %-12s %-10s %-10s %-15s\n", 2, "Sports", "Basketball", "Bounce ball", 2 +"/"+ 10, "Friday", 15.00, 18.00, "Court", "Amran Mohamed");
+		testOutput = String.format("%-4s %-11s %-13s %-15s %-10s %-20s %-12s %-10s %-10s %-15s\n", 5, "Sports", "Football", "Kick ball", 1+"/"+10, "Friday", 15.00, 18.00, "Field", "Amran Mohamed");
+		testOutput += String.format("%-4s %-11s %-13s %-15s %-10s %-20s %-12s %-10s %-10s %-15s\n", 6, "Sports", "Basketball", "Bounce ball", 2 +"/"+ 10, "Friday", 15.00, 18.00, "Court", "Amran Mohamed");
 		
 		assertEquals("Check that expected output is the same as test output", testOutput, allCCAs);
 	}
+	
+//---------------------------------------- 2. Test Registration Accounts ----------------------------------------//		
+	//5
+	@Test
+	public void testLoginRegistrationAcc() {
+		//test list not empty
+		assertNotNull("Check if there is valid Registration Acc arraylist", registrationAccList);
+		
+		registrationAccList.add(regiAcc1);
+		RegistrationAccount login = C206_CaseStudy.dologinRegistrationAcc(registrationAccList, "S1", 1001);
+		RegistrationAccount wronglogin = C206_CaseStudy.dologinRegistrationAcc(registrationAccList, "S2", 1002);
+
+		RegistrationAccount correct = regiAcc1;
+		
+		//test return null if fail log in
+		assertNull("Return true if cannot login with wrong credentials", wronglogin);
+
+		//test return correct student id and reg id obj if logged in
+		assertEquals("Return correct student id & reg id if login with correct credentials", login, correct);
+	}
+	
+	//6
+	@Test
+	public void testRegisterCCA() {
+		//test list not empty
+		assertNotNull("Check if there is valid Registration Acc arraylist", registrationAccList);
+		
+		registrationAccList.add(regiAcc1);
+		RegistrationAccount loginCredentials = C206_CaseStudy.dologinRegistrationAcc(registrationAccList, "S1", 1001);
+//		ccaList.add(cca1); //29
+//		ccaList.add(cca4); //32
+		System.out.println(cca4);
+		System.out.println(cca1);
+
+		boolean success = C206_CaseStudy.doRegisterCCA(registrationAccList, ccaList, 32, loginCredentials);
+
+		
+		//test cca name and application status
+		
+		//test cca cannot be applied more than once
+		
+		//test cca cannot be registered when vacancy is full
+		assertFalse("Check cannot register CCA if vacancy full", success);
+		
+	}
+	
+	//7
+	@Test 
+	public void testViewRegistrationStatus() {
+		//test list not empty
+		assertNotNull("Check if there is valid Registration Acc arraylist", registrationAccList);
+		
+		
+		
+	}
+	
+	//7
+	//8
+	//9
+	//10
+	//11
+	//12
+	//13
+	//14
+	//15
+	//16
+	//17
+	//18
 			
 	@After
 	public void tearDown() throws Exception {
 		adminList = null;
-		studentAccList = null;
-		studentsList = null;
+		registrationAccList = null;
 		ccaList= null;
 	}
 

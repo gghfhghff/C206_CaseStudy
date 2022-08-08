@@ -16,8 +16,8 @@ public class CCA {
 	private String category;
 	private String title;
 	private String description;
-	private int vacancyOpen;
-	private int vacancyTaken;
+	private Integer vacancyOpen;
+	private Integer vacancyTaken;
 	private String dayOfWeek;
 	private Double timeStart;
 	private Double timeEnd;
@@ -27,8 +27,8 @@ public class CCA {
 	private ArrayList<String> registeredStudents;
 	private ArrayList<String> status;
 	
-	public CCA(String category, String title, String description, int vacancyOpen, int vacancyTaken, 
-			String dayOfWeek, double timeStart, double timeEnd, String venue, String instructor) {
+	public CCA(String category, String title, String description, Integer vacancyOpen, Integer vacancyTaken, 
+			String dayOfWeek, Double timeStart, Double timeEnd, String venue, String instructor) {
 		
 		id = nextId;
 		nextId++;
@@ -62,7 +62,7 @@ public class CCA {
 		status.add("Pending");
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -91,7 +91,7 @@ public class CCA {
 	}
 	
 	
-	public int getVacancyOpen() {
+	public Integer getVacancyOpen() {
 		return vacancyOpen;
 	}
 
@@ -99,7 +99,7 @@ public class CCA {
 		this.vacancyOpen = vacancyOpen;
 	}
 
-	public int getVacancyTaken() {
+	public Integer getVacancyTaken() {
 		return vacancyTaken;
 	}
 
@@ -115,7 +115,7 @@ public class CCA {
 		dayOfWeek = newDayOfWeek;
 	}
 	
-	public double getTimeStart() {
+	public Double getTimeStart() {
 		return timeStart;
 	}
 	
@@ -123,7 +123,7 @@ public class CCA {
 		timeStart = newTimeStart;
 	}
 	
-	public double getTimeEnd() {
+	public Double getTimeEnd() {
 		return timeEnd;
 	}
 	

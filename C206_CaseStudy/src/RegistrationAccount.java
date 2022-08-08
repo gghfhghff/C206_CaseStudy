@@ -2,18 +2,13 @@ import java.util.ArrayList;
 
 public class RegistrationAccount {
 	
-	private int registrationId;
+	private Integer registrationId;
 	private String studentId;
 	
 	private ArrayList<String> registeredCCAs;
 	private ArrayList<String> status;
 
-	public RegistrationAccount (int registrationId, String studentId) {
-		
-		
-//	    Random random = new Random();
-//	    int upperBound = 100;
-//	    int randomId = random.nextInt(upperBound)+1;
+	public RegistrationAccount (Integer registrationId, String studentId) {
 
 		this.registrationId = registrationId;
 		this.studentId = studentId;
@@ -21,7 +16,7 @@ public class RegistrationAccount {
 		status = new ArrayList<String>();
 	}
 
-	public int getRegistrationId() {
+	public Integer getRegistrationId() {
 		return registrationId;
 	}
 
@@ -54,12 +49,5 @@ public class RegistrationAccount {
 		}
 		return msg;
 	}
-
-	@Override
-	public String toString() {
-		return "" + registrationId;
-	}
-
-	
 	
 }

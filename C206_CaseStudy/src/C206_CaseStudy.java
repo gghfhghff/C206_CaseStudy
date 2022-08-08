@@ -92,25 +92,22 @@ public class C206_CaseStudy {
 			
 			//login student
 			else if (option == 2) {
-				if (loginStudent(studentAccList) == null) {
-					accountDetails = loginStudent(studentAccList);
+				if (loginRegistrationAcc(studentAccList) != null) {
+					accountDetails = loginRegistrationAcc(studentAccList);
 					loggedin = true;
-
 					
 					while (optionTask != 4) {
 							C206_CaseStudy.menu("Student");
 							optionTask = Helper.readInt("Choose option > ");
-	
+						//1. register cca	
 						if (optionTask == 1) {
 							C206_CaseStudy.registerCCA(studentAccList, ccaList, accountDetails);
-							System.out.println(studentAccList);
 						//2. delete cca	
 						} 	
 						else if (optionTask == 2) {
-							
 							C206_CaseStudy.dropRegistration(studentAccList);
 						}
-											
+						//3. view cca registration status			
 						else if (optionTask == 3) {
 							C206_CaseStudy.viewRegistrationStatus(studentAccList);
 						}
@@ -182,25 +179,24 @@ public class C206_CaseStudy {
 	
 	//---------------------------------------- Login ----------------------------------------//
 	public static boolean loginAdmin(ArrayList<Users> adminAL) {
-		boolean loggedin = false;
+		boolean success = false;
 		String msg = "Login unsuccessful";
-
 		
 		String name = Helper.readString("Enter name > ");
 		String password = Helper.readString("Enter password > ");
 		
 		for (int i = 0; i < adminAL.size(); i++) {
 			if (adminAL.get(i).getName().equals(name) && adminAL.get(i).getPassword().equals(password)) {
-				loggedin = true;
+				success = true;
 				msg = "Login successful";
 				break;
 			} 
 		}
 		C206_CaseStudy.setHeader(msg);
-		return loggedin;
+		return success;
 	}
 	
-	//---------------------------------------- Add CCA ----------------------------------------//
+	//---------------------------------------- 1. Add CCA ----------------------------------------//
 	public static CCA inputCCA() {	
 		String category = Helper.readString("Enter category > ");
 		String title = Helper.readString("Enter cca title > ");
@@ -229,7 +225,7 @@ public class C206_CaseStudy {
 		return success;
 	}
 		
-//---------------------------------------- Delete CCA ----------------------------------------//
+//---------------------------------------- 2. Delete CCA ----------------------------------------//
 	public static void deleteCCA(ArrayList<CCA> ccalist) {
 		int ccaid = Helper.readInt("Enter a CCA id > ");
 		doDeleteCCA(ccalist, ccaid);
@@ -250,7 +246,7 @@ public class C206_CaseStudy {
 		return success;
 	}
 		
-//---------------------------------------- Update CCA Description ----------------------------------------//
+//---------------------------------------- 3. Update CCA Description ----------------------------------------//
 	public static void updateCCADesc(ArrayList<CCA> ccalist) {
 		Integer ccaid = Helper.readInt("Enter a CCA id > ");
 		String newDesc = Helper.readString("Enter a description > ");
@@ -272,7 +268,7 @@ public class C206_CaseStudy {
 		return success;
 	}
 		
-//---------------------------------------- View CCAs ----------------------------------------//
+//---------------------------------------- 4. View CCAs ----------------------------------------//
 	public static String getCCAs(ArrayList<CCA> ccalist) {
 		String output = "";
 		
@@ -294,7 +290,9 @@ public class C206_CaseStudy {
 	
 	//-------------------------------------------------- 2B. Student --------------------------------------------------//
 	
-	//---------------------------------------- Register ----------------------------------------//
+//---------------------------------------- 5. Register/Login For Student/Parent Account ----------------------------------------//
+	
+	//register acc
 	public static boolean registerStudent(ArrayList<Students> studentlist, ArrayList<RegistrationAccount> registerAcclist) {
 		boolean success = false;
 		String msg = "Register unsuccessful";
@@ -303,13 +301,13 @@ public class C206_CaseStudy {
 		String email = Helper.readString("Enter your email > ");
 		int contact = Helper.readInt("Enter your contact number > ");
 		String address = Helper.readString("Enter your address > ");
-//		
+	
 		String studentID = Helper.readString("Enter your child's student ID > ");
 		String studentName = Helper.readString("Enter your child's name > ");
 		String grade = Helper.readString("Enter your child's grade > ");
 		String classCode = Helper.readString("Enter your child's class > ");
 		String classTeacher = Helper.readString("Enter classroom teacher > ");
-//		
+		
 		ArrayList<Students> validationList = new ArrayList<>();
 		validationList.add(new Students(studentID, studentName, address, grade, classCode, classTeacher, parentname, email, contact));
 
@@ -326,6 +324,7 @@ public class C206_CaseStudy {
 		return success;	
 	}
 	
+	//random id generator
 	public static int randomUIDGenerator(ArrayList<RegistrationAccount> registerAcclist) {
 		
 	    Random random = new Random();
@@ -346,65 +345,76 @@ public class C206_CaseStudy {
 		return uniqueID;
 	}
 	
-	//---------------------------------------- Login ----------------------------------------//
-	public static RegistrationAccount loginStudent(ArrayList<RegistrationAccount> registerAccList) {
-		RegistrationAccount obj = null;
-		String msg = "Login unsuccessful";
-		
+	//login
+	public static RegistrationAccount loginRegistrationAcc(ArrayList<RegistrationAccount> registerAccList) {
 		String studentId = Helper.readString("Enter student id > ");
-		int registerId = Helper.readInt("Enter registration id > ");
+		Integer registerId = Helper.readInt("Enter registration id > ");
 		
+		//refactor
+		RegistrationAccount studentIdentifier = dologinRegistrationAcc(registerAccList, studentId, registerId);
+		return studentIdentifier;
+	}
+	
+	public static RegistrationAccount dologinRegistrationAcc(ArrayList<RegistrationAccount> registerAccList, String studentid, int registerid) {
+		String msg = "Login unsuccessful";
+		RegistrationAccount studentIdentifier = null;
+
 		for (int i = 0; i < registerAccList.size(); i++) {
-			if (registerAccList.get(i).getStudentId().equals(studentId) && registerId == registerAccList.get(i).getRegistrationId()) {
-				obj = new RegistrationAccount(registerId, studentId);	
+			if (registerAccList.get(i).getStudentId().equals(studentid) && registerAccList.get(i).getRegistrationId().equals(registerid)) {
+				studentIdentifier = new RegistrationAccount(registerid, studentid);	
 				msg = "Login successful";
-				break;
 			}
 		}
 		C206_CaseStudy.setHeader(msg);
-		return obj;
+		return studentIdentifier;
 	}
 	
   	        
-	//---------------------------------------- Register ----------------------------------------//
+//---------------------------------------- 6. Register For CCA ----------------------------------------//
 	public static void registerCCA(ArrayList<RegistrationAccount> registerAcclist, ArrayList<CCA> ccaList, RegistrationAccount details) {
-		ArrayList<String> status = new ArrayList<>();
-		ArrayList<String> cca = new ArrayList<>();
-		String title ="";
-		String msg = "Register unsuccessful";
-		
 		C206_CaseStudy.viewCCAs(ccaList);
 		int id = Helper.readInt("Enter CCA ID to register > ");
-
+		doRegisterCCA(registerAcclist, ccaList, id, details);
+	}
+	
+	public static boolean doRegisterCCA(ArrayList<RegistrationAccount> registerAcclist, ArrayList<CCA> ccaList, Integer ccaid, RegistrationAccount details) {
+		ArrayList<String> status = new ArrayList<>();
+		ArrayList<String> cca = new ArrayList<>();
+		String ccatitle ="";
+		String msg = "Register unsuccessful";
+		boolean success = false;
+		
 		//traverse cca list
 		for (int i = 0; i < ccaList.size(); i++) {
 			//get title for selected cca
-			if (ccaList.get(i).getId() == id) {
-				title = ccaList.get(i).getTitle();
+			if (ccaList.get(i).getId().equals(ccaid)) {
+				ccatitle = ccaList.get(i).getTitle();
 				//check for vacancy
 				if (ccaList.get(i).getVacancyOpen() != ccaList.get(i).getVacancyTaken()) {
-
+					//traverse Registration Account list to get Student account to add cca to
 					for (int a = 0; a < registerAcclist.size(); a++) {
 						if (registerAcclist.get(a).getStudentId().equals(details.getStudentId())) {
-							
 							cca = registerAcclist.get(a).getRegisteredCCAs();
-							cca.add(title);
+							cca.add(ccatitle);
 							status = registerAcclist.get(a).getStatus();
 							status.add("pending");
 							registerAcclist.get(a).setRegisteredCCAs(cca);
 							registerAcclist.get(a).setStatus(status);
 							msg = "Register successful";
+							success = true;
 						} 
 					}
 				} else {
-						msg = "No more vacancy";
-						}	 
-			} 
+					msg = "No more vacancy";
+					}	 
+				} 
 			}
 			C206_CaseStudy.setHeader(msg);
-		}
+			return success;
+	}
+
 	
-	//---------------------------------------- View registration status ----------------------------------------//
+//---------------------------------------- 7. View CCA Registration Status ----------------------------------------//
 	public static void viewRegistrationStatus(ArrayList<RegistrationAccount> registerAcclist) {
 		String msg = "";
 		
@@ -414,6 +424,7 @@ public class C206_CaseStudy {
 		System.out.println(msg);
 	}
 	
+//---------------------------------------- 8. Delete CCA Registration ----------------------------------------//	
 	public static void dropRegistration(ArrayList<RegistrationAccount> registerAcclist) {
 		String msg = "Drop unsuccessful";
 		ArrayList<String> cca = new ArrayList<>();

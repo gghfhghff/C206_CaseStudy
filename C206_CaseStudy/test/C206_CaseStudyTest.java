@@ -182,7 +182,7 @@ public class C206_CaseStudyTest {
 		System.out.println(cca4);
 		System.out.println(cca1);
 
-		boolean success = C206_CaseStudy.doRegisterCCA(registrationAccList, ccaList, 32, loginCredentials);
+		boolean fullvanacy = C206_CaseStudy.doRegisterCCA(registrationAccList, ccaList, 32, loginCredentials);
 
 		
 		//test cca name and application status
@@ -190,7 +190,7 @@ public class C206_CaseStudyTest {
 		//test cca cannot be applied more than once
 		
 		//test cca cannot be registered when vacancy is full
-		assertFalse("Check cannot register CCA if vacancy full", success);
+		assertFalse("Check cannot register CCA if vacancy full", fullvanacy);
 		
 	}
 	
@@ -199,9 +199,6 @@ public class C206_CaseStudyTest {
 	public void testViewRegistrationStatus() {
 		//test list not empty
 		assertNotNull("Check if there is valid Registration Acc arraylist", registrationAccList);
-		
-		
-		
 	}
 	
 	//7
